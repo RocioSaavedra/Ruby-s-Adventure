@@ -103,6 +103,8 @@ MonoBehaviour:
   speed: 3
   maxHealth: 5
   projectilePrefab: {fileID: 0}
+  IncreaseHealthPrefab: {fileID: 0}
+  DecreaseHealthPrefab: {fileID: 0}
   timeInvincible: 2
 --- !u!50 &8739862326462031833
 Rigidbody2D:
