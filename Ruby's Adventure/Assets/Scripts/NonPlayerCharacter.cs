@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class NonPlayerCharacter : MonoBehaviour
 {
+    ////Anna Kahn changes
     public float displayTime = 4.0f;
     public GameObject dialogBox;
     float timerDisplay;
+    //Rocio Saavedra helped with sound
+    public AudioSource npc_clip;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +29,7 @@ public class NonPlayerCharacter : MonoBehaviour
             if (timerDisplay < 0)
             {
                 dialogBox.SetActive(false);
+                
             }
         }
     }
@@ -34,5 +38,7 @@ public class NonPlayerCharacter : MonoBehaviour
     {
         timerDisplay = displayTime;
         dialogBox.SetActive(true);
+        //RS
+        npc_clip.Play();
     }
 }

@@ -7,8 +7,13 @@ using UnityEngine.SceneManagement;
 
 public class RubyController : MonoBehaviour
 {
+    //Rocio Saavedra changes
+    public float speed;
 
-    public float speed = 3.0f;
+    public AudioSource lost;
+    public AudioClip lost_clip;
+
+    public AudioSource win;
 
     public int maxHealth = 5;
 
@@ -41,6 +46,11 @@ public class RubyController : MonoBehaviour
     Vector2 lookDirection = new Vector2(1,0);
 
     AudioSource audioSource;
+ 
+    //Anna Kahn changes for the speed prefab
+    public GameObject IncreaseSpeedPrefab;
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -51,8 +61,6 @@ public class RubyController : MonoBehaviour
 
         currentHealth = maxHealth;
 
-        audioSource = GetComponent<AudioSource>();
-        //currentHealth = 1;
     }
 
     public void PlaySound(AudioClip clip)
@@ -103,30 +111,19 @@ public class RubyController : MonoBehaviour
             }
         }
 
-        /*if (Input.GetKey(KeyCode.R))
-
-        {
-
-            if (gameOverText == true)
-
-            {
-
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // this loads the currently active scene
-
-            }
-
-        }*/
 
         if (currentHealth == 0)
         {
-            
 
+          //Rocio Saavedra changes for sound
             gameOverText.gameObject.SetActive(true);
             gameOverText.text = "You lost! Press R to Restart!";
 
-             Ruby.transform.position = new Vector3(-20, 10, 0);
+            Ruby.transform.position = new Vector3(-20, 10, 0);
+            lost.PlayOneShot(lost_clip);
            
 
+            
 
             if (Input.GetKey(KeyCode.R))
 
@@ -134,8 +131,8 @@ public class RubyController : MonoBehaviour
 
                 if (gameOverText == true)
 
-                {
-
+                {     
+                    
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // this loads the currently active scene
 
                 }
@@ -171,7 +168,7 @@ public class RubyController : MonoBehaviour
             isInvincible = true;
             invincibleTimer = timeInvincible;
             GameObject DecreaseHealth = Instantiate(DecreaseHealthPrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
-            //PlaySound(hitSound);
+           
         }
 
         if (amount > 0)
@@ -183,7 +180,7 @@ public class RubyController : MonoBehaviour
 
         UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
 
-       //
+    
 
     }
 
@@ -207,6 +204,7 @@ public class RubyController : MonoBehaviour
         {
             gameOverText.gameObject.SetActive(true);
             gameOverText.text = "Congratulations! You win! Game created by group #19";
+            win.Play(); //Rocio Saavedra
         }
     }
     void SetScoreText()
@@ -214,9 +212,39 @@ public class RubyController : MonoBehaviour
         scoreText.text = "Fixed Robots: " + score.ToString();
 
     }
-
     
+  
+        //Rocio Saavedra changes
+        void OnTriggerEnter2D(Collider2D other)
 
+        {
+        if (other.gameObject.CompareTag("Shrooms"))
+
+        {
+
+            other.gameObject.SetActive(true);
+
+            speed = speed - 2;
+
+
+
+
+        }
+        //Anna Kahn changes / Rocio Saavedra Helped
+        if (other.gameObject.CompareTag("SpeedBoost"))
+
+            {
+
+            other.gameObject.SetActive(false);
+
+            speed = speed + 4;
+
+            
+
+        }
+
+       
+    }
    
 
 }
